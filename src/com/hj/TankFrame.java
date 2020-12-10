@@ -14,9 +14,11 @@ public class TankFrame extends Frame {
 
     private final MyKeyAdapter myKeyAdapter = new MyKeyAdapter();
     private Tank t1 = new Tank();
+    private int width = 800;
+    private int height = 600;
 
     public TankFrame() throws HeadlessException {
-        setSize(800, 600);
+        setSize(width, height);
         setResizable(false);
         setTitle("tank-v1.0");
         setVisible(true);
@@ -28,6 +30,27 @@ public class TankFrame extends Frame {
             }
         });
         addKeyListener(myKeyAdapter);
+    }
+
+    Image offScreenImage = null;
+
+    /**
+     * 防闪烁:将东西统统画到内存中的图片上，然后一次性把图片画出来;对屏幕而言，只画了一次；将所有绘画都往内存中画
+     *
+     * @param g
+     */
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(width, height);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, width, height);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     @Override
@@ -62,6 +85,9 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_RIGHT:
                     dRight = true;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    t1.fire();
+                    break;
                 default:
                     break;
             }
@@ -90,10 +116,10 @@ public class TankFrame extends Frame {
             setMainTankDir();
         }
 
-        private void  setMainTankDir(){
+        private void setMainTankDir() {
             if (!dUp && !dDown && !dLeft && !dRight) {
                 t1.setMoving(false);
-            } else{
+            } else {
                 t1.setMoving(true);
             }
             if (dDown) t1.setDir(Dir.DOWN);

@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Huijun Zhu
@@ -13,9 +15,10 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
     private final MyKeyAdapter myKeyAdapter = new MyKeyAdapter();
-    private Tank t1 = new Tank();
-    private int width = 800;
-    private int height = 600;
+    Tank t1 = new Tank(200,200,Dir.DOWN,this);
+    List<Bullet> bullets = new ArrayList<>();
+    public final static int width = 800;
+    public final static int height = 600;
 
     public TankFrame() throws HeadlessException {
         setSize(width, height);
@@ -55,7 +58,14 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color color = g.getColor();
+        g.setColor(Color.pink);
+        g.drawString("bullets-size:"+ bullets.size(),10,60);
+        g.setColor(color);
         t1.paint(g);
+        for(int i = 0; i< bullets.size(); i++){
+            bullets.get(i).paint(g);
+        }
     }
 
     private class MyKeyAdapter implements KeyListener {

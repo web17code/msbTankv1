@@ -13,8 +13,14 @@ public class Tank {
     private Dir dir = Dir.DOWN;
     private final int speed = 10;
     private boolean moving = false;
-    private Bullet b = new Bullet(Dir.UP,300,300);
+    private TankFrame tf;
 
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.tf = tf;
+    }
 
     void paint(Graphics g){
         calculateXy(dir);
@@ -22,7 +28,6 @@ public class Tank {
         g.setColor(Color.CYAN);
         g.drawRect(x,y,width, height);
         g.setColor(color);
-        b.paint(g);
     }
 
     private void calculateXy(Dir dir){
@@ -41,8 +46,6 @@ public class Tank {
         if (dir==Dir.DOWN) {
             y = y + speed;
         }
-        System.out.println("x: "+x);
-        System.out.println(x+","+y);
     }
 
     public Dir getDir() {
@@ -62,6 +65,6 @@ public class Tank {
     }
 
     public void fire() {
-        b = new Bullet(this.dir, this.x, this.y);
+        tf.bullets.add(new Bullet(this.dir, this.x, this.y, this.tf));
     }
 }

@@ -1,6 +1,7 @@
 package com.hj;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Huijun Zhu
@@ -43,10 +44,25 @@ public class Bullet {
             tf.bullets.remove(this);
             return;
         }
-        Color color = g.getColor();
-        g.setColor(Color.ORANGE);
-        g.fillOval(x, y, width, height);
-        g.setColor(color);
+        BufferedImage img = null;
+        switch (dir) {
+            case DOWN:
+                img = ResourceImageMgr.bulletDown;
+                break;
+            case UP:
+                img = ResourceImageMgr.bulletUp;
+                break;
+            case LEFT:
+                img = ResourceImageMgr.bulletLeft;
+                break;
+            case RIGHT:
+                img = ResourceImageMgr.bulletRight;
+                break;
+            default:
+                img = ResourceImageMgr.bulletUp;
+                break;
+        }
+        g.drawImage(img, x, y, null);
     }
 
 

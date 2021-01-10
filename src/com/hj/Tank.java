@@ -1,6 +1,9 @@
 package com.hj;
 
+import sun.security.util.ResourcesMgr;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Huijun Zhu
@@ -9,7 +12,7 @@ import java.awt.*;
 public class Tank {
     private int width = 50;
     private int height = 50;
-    private int x=200, y = 200;
+    private int x = 200, y = 200;
     private Dir dir = Dir.DOWN;
     private final int speed = 10;
     private boolean moving = false;
@@ -22,28 +25,43 @@ public class Tank {
         this.tf = tf;
     }
 
-    void paint(Graphics g){
-        calculateXy(dir);
-        Color color = g.getColor();
-        g.setColor(Color.CYAN);
-        g.drawRect(x,y,width, height);
-        g.setColor(color);
+    void paint(Graphics g) {
+        BufferedImage img = null;
+        switch (dir) {
+            case DOWN:
+                img = ResourceImageMgr.tankDown;
+                break;
+            case UP:
+                img = ResourceImageMgr.tankUp;
+                break;
+            case LEFT:
+                img = ResourceImageMgr.tankLeft;
+                break;
+            case RIGHT:
+                img = ResourceImageMgr.tankRight;
+                break;
+            default:
+                img = ResourceImageMgr.tankUp;
+                break;
+        }
+        g.drawImage(img, x, y, null);
+        move(dir);
     }
 
-    private void calculateXy(Dir dir){
-        if (!moving){
+    private void move(Dir dir) {
+        if (!moving) {
             return;
         }
-        if (dir==Dir.RIGHT) {
+        if (dir == Dir.RIGHT) {
             x = x + speed;
         }
-        if (dir==Dir.LEFT) {
+        if (dir == Dir.LEFT) {
             x = x - speed;
         }
-        if (dir==Dir.UP) {
+        if (dir == Dir.UP) {
             y = y - speed;
         }
-        if (dir==Dir.DOWN) {
+        if (dir == Dir.DOWN) {
             y = y + speed;
         }
     }

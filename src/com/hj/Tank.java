@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
  * @date 2020/12/7
  */
 public class Tank {
-    private int width = 50;
-    private int height = 50;
     private int x = 200, y = 200;
     private Dir dir = Dir.DOWN;
     private final int speed = 10;
     private boolean moving = false;
     private TankFrame tf;
+    public static final int WEIGHT = ResourceImageMgr.tankUp.getWidth();
+    public static final int HEIGHT = ResourceImageMgr.tankUp.getHeight();
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -83,6 +83,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.dir, this.x, this.y, this.tf));
+        int bY = this.y + HEIGHT/2 - Bullet.HEIGHT/2;
+        int bX = this.x + WEIGHT/2 - Bullet.WEIGHT/2;
+        tf.bullets.add(new Bullet(this.dir, bX, bY, this.tf));
     }
 }

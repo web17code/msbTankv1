@@ -17,6 +17,8 @@ public class Bullet {
     private int height = 10;
     private TankFrame tf = null;
     private boolean live = true;
+    public static final int WEIGHT = ResourceImageMgr.bulletUp.getWidth();
+    public static final int HEIGHT = ResourceImageMgr.bulletUp.getHeight();
 
 
     public Bullet(Dir dir, int x, int y ,TankFrame tf) {
@@ -64,6 +66,4 @@ public class Bullet {
         }
         g.drawImage(img, x, y, null);
     }
-
-
 }

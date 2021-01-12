@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 /**
  * @author Huijun Zhu
- * @date 2020/12/8
+ * 2020/12/8
  */
 public class Bullet {
     private final int speed = 10;
@@ -13,15 +13,13 @@ public class Bullet {
     private Dir dir;
 
     private int x, y;
-    private int width = 5;
-    private int height = 10;
     private TankFrame tf = null;
     private boolean live = true;
     public static final int WEIGHT = ResourceImageMgr.bulletUp.getWidth();
     public static final int HEIGHT = ResourceImageMgr.bulletUp.getHeight();
 
 
-    public Bullet(Dir dir, int x, int y ,TankFrame tf) {
+    public Bullet(Dir dir, int x, int y, TankFrame tf) {
         this.dir = dir;
         this.x = x;
         this.y = y;
@@ -29,6 +27,10 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
+        if (!this.live) {
+            tf.bullets.remove(this);
+            return;
+        }
         if (dir == Dir.RIGHT) {
             x = x + speed;
         }
@@ -65,5 +67,20 @@ public class Bullet {
                 break;
         }
         g.drawImage(img, x, y, null);
+    }
+
+
+    public void collideWith(Tank tank){
+        Rectangle bulletRect = new Rectangle(x, y, WEIGHT, HEIGHT);
+        Rectangle tankRect = new Rectangle(tank.getX(), tank.getY(), Tank.WEIGHT, Tank.HEIGHT);
+        boolean dead = bulletRect.intersects(tankRect);
+        if (dead){
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.live = false;
     }
 }

@@ -1,19 +1,18 @@
 package com.hj;
 
-import sun.security.util.ResourcesMgr;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
  * @author Huijun Zhu
- * @date 2020/12/7
+ * 2020/12/7
  */
 public class Tank {
     private int x = 200, y = 200;
     private Dir dir = Dir.DOWN;
     private final int speed = 10;
     private boolean moving = false;
+    private boolean live = true;
     private TankFrame tf;
     public static final int WEIGHT = ResourceImageMgr.tankUp.getWidth();
     public static final int HEIGHT = ResourceImageMgr.tankUp.getHeight();
@@ -27,6 +26,10 @@ public class Tank {
 
     void paint(Graphics g) {
         BufferedImage img = null;
+        if (!this.live) {
+            tf.badTanks.remove(this);
+            return;
+        }
         switch (dir) {
             case DOWN:
                 img = ResourceImageMgr.tankDown;
@@ -83,8 +86,20 @@ public class Tank {
     }
 
     public void fire() {
-        int bY = this.y + HEIGHT/2 - Bullet.HEIGHT/2;
-        int bX = this.x + WEIGHT/2 - Bullet.WEIGHT/2;
+        int bY = this.y + HEIGHT / 2 - Bullet.HEIGHT / 2;
+        int bX = this.x + WEIGHT / 2 - Bullet.WEIGHT / 2;
         tf.bullets.add(new Bullet(this.dir, bX, bY, this.tf));
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void die() {
+        this.live = false;
     }
 }

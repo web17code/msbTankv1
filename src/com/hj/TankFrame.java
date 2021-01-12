@@ -10,13 +10,14 @@ import java.util.List;
 
 /**
  * @author Huijun Zhu
- * @date 2020/12/5
+ *  2020/12/5
  */
 public class TankFrame extends Frame {
 
     private final MyKeyAdapter myKeyAdapter = new MyKeyAdapter();
-    Tank t1 = new Tank(200,200,Dir.DOWN,this);
+    Tank t1 = new Tank(200, 200, Dir.DOWN, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<Tank> badTanks = new ArrayList<>();
     public final static int width = 800;
     public final static int height = 600;
 
@@ -33,6 +34,11 @@ public class TankFrame extends Frame {
             }
         });
         addKeyListener(myKeyAdapter);
+
+        for (int i = 0; i < 5; i++) {
+            Tank tank = new Tank(200 + 50 * i, 200, Dir.DOWN, this);
+            badTanks.add(tank);
+        }
     }
 
     Image offScreenImage = null;
@@ -60,11 +66,21 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         Color color = g.getColor();
         g.setColor(Color.pink);
-        g.drawString("bullets-size:"+ bullets.size(),10,60);
+        g.drawString("bullets-size:" + bullets.size(), 10, 60);
+        g.drawString("badTank-size:" + badTanks.size(), 10, 80);
         g.setColor(color);
         t1.paint(g);
-        for(int i = 0; i< bullets.size(); i++){
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < badTanks.size(); i++) {
+            badTanks.get(i).paint(g);
+        }
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int j = 0; j < badTanks.size(); j++){
+                bullets.get(i).collideWith(badTanks.get(j));
+            }
         }
     }
 

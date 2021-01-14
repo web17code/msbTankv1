@@ -77,6 +77,7 @@ public class Bullet {
         if (dead){
             tank.die();
             this.die();
+            tf.explosions.add(new Explosion(tank.getX(), tank.getY(), tf));
         }
     }
 

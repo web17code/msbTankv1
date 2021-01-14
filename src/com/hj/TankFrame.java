@@ -10,14 +10,14 @@ import java.util.List;
 
 /**
  * @author Huijun Zhu
- *  2020/12/5
+ * 2020/12/5
  */
 public class TankFrame extends Frame {
-
     private final MyKeyAdapter myKeyAdapter = new MyKeyAdapter();
     Tank t1 = new Tank(200, 200, Dir.DOWN, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> badTanks = new ArrayList<>();
+    List<Explosion> explosions = new ArrayList<>();
     public final static int width = 800;
     public final static int height = 600;
 
@@ -68,17 +68,20 @@ public class TankFrame extends Frame {
         g.setColor(Color.pink);
         g.drawString("bullets-size:" + bullets.size(), 10, 60);
         g.drawString("badTank-size:" + badTanks.size(), 10, 80);
+        g.drawString("explosion-size:" + explosions.size(), 10, 100);
         g.setColor(color);
         t1.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
-
         for (int i = 0; i < badTanks.size(); i++) {
             badTanks.get(i).paint(g);
         }
+        for (int i = 0; i < explosions.size(); i++) {
+            explosions.get(i).paint(g);
+        }
         for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < badTanks.size(); j++){
+            for (int j = 0; j < badTanks.size(); j++) {
                 bullets.get(i).collideWith(badTanks.get(j));
             }
         }

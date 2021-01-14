@@ -13,6 +13,7 @@ import static javax.imageio.ImageIO.read;
 public class ResourceImageMgr {
     public static BufferedImage tankUp, tankDown, tankLeft, tankRight;
     public static BufferedImage bulletUp, bulletDown, bulletLeft, bulletRight;
+    public static BufferedImage[] explosions = new BufferedImage[16];
 
     static {
         try {
@@ -25,6 +26,10 @@ public class ResourceImageMgr {
             bulletDown = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
             bulletLeft = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
             bulletRight = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
+            for (int i = 0; i < explosions.length; i++) {
+                explosions[i] = ImageIO.read(
+                        ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/e" + (i + 1) + ".gif"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

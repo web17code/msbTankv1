@@ -9,9 +9,8 @@ import java.awt.image.BufferedImage;
  */
 public class Bullet {
     private final int speed = 10;
-
+    private final Group group;
     private Dir dir;
-
     private int x, y;
     private TankFrame tf = null;
     private boolean live = true;
@@ -19,11 +18,12 @@ public class Bullet {
     public static final int HEIGHT = ResourceImageMgr.bulletUp.getHeight();
 
 
-    public Bullet(Dir dir, int x, int y, TankFrame tf) {
+    public Bullet(Dir dir, int x, int y, Group group, TankFrame tf) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.tf = tf;
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -70,14 +70,19 @@ public class Bullet {
     }
 
 
-    public void collideWith(Tank tank){
+    public void collideWith(Tank tank) {
         Rectangle bulletRect = new Rectangle(x, y, WEIGHT, HEIGHT);
         Rectangle tankRect = new Rectangle(tank.getX(), tank.getY(), Tank.WEIGHT, Tank.HEIGHT);
-        boolean dead = bulletRect.intersects(tankRect);
-        if (dead){
+        boolean dead = false;
+        if (group != tank.getGroup()) {
+            dead = bulletRect.intersects(tankRect);
+        }
+        if (dead) {
             tank.die();
             this.die();
-            tf.explosions.add(new Explosion(tank.getX(), tank.getY(), tf));
+            int eX = tank.getX() + Tank.WEIGHT / 2 - Explosion.WEIGHT / 2;
+            int eY = tank.getY() + Tank.HEIGHT / 2 - Explosion.HEIGHT / 2;
+            tf.explosions.add(new Explosion(eX, eY, tf));
         }
     }
 

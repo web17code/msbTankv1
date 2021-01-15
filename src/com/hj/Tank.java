@@ -2,6 +2,7 @@ package com.hj;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * @author Huijun Zhu
@@ -10,18 +11,21 @@ import java.awt.image.BufferedImage;
 public class Tank {
     private int x = 200, y = 200;
     private Dir dir = Dir.DOWN;
-    private final int speed = 10;
+    private int speed = 3;
     private boolean moving = false;
     private boolean live = true;
     private TankFrame tf;
+    private Group group;
+    private Random random = new Random();
     public static final int WEIGHT = ResourceImageMgr.tankUp.getWidth();
     public static final int HEIGHT = ResourceImageMgr.tankUp.getHeight();
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     void paint(Graphics g) {
@@ -49,6 +53,13 @@ public class Tank {
         }
         g.drawImage(img, x, y, null);
         move(dir);
+        if (random.nextInt(100) > 95 && this.group != Group.GOOD) {
+            this.fire();
+        }
+
+        if (random.nextInt(200) > 195 && this.group != Group.GOOD) {
+            this.dir = Dir.values()[random.nextInt(4)];
+        }
     }
 
     private void move(Dir dir) {
@@ -88,7 +99,7 @@ public class Tank {
     public void fire() {
         int bY = this.y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         int bX = this.x + WEIGHT / 2 - Bullet.WEIGHT / 2;
-        tf.bullets.add(new Bullet(this.dir, bX, bY, this.tf));
+        tf.bullets.add(new Bullet(this.dir, bX, bY, this.group, this.tf));
     }
 
     public int getX() {
@@ -97,6 +108,14 @@ public class Tank {
 
     public int getY() {
         return y;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void die() {

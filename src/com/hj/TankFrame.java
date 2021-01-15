@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
     private final MyKeyAdapter myKeyAdapter = new MyKeyAdapter();
-    Tank t1 = new Tank(200, 200, Dir.DOWN, this);
+    Tank t1 = new Tank(200, 200, Dir.DOWN, Group.GOOD,this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> badTanks = new ArrayList<>();
     List<Explosion> explosions = new ArrayList<>();
@@ -22,6 +22,7 @@ public class TankFrame extends Frame {
     public final static int height = 600;
 
     public TankFrame() throws HeadlessException {
+        t1.setSpeed(15);
         setSize(width, height);
         setResizable(false);
         setTitle("tank-v1.0");
@@ -36,7 +37,8 @@ public class TankFrame extends Frame {
         addKeyListener(myKeyAdapter);
 
         for (int i = 0; i < 5; i++) {
-            Tank tank = new Tank(200 + 50 * i, 200, Dir.DOWN, this);
+            Tank tank = new Tank(200 + 50 * i, 200, Dir.DOWN, Group.BAD,this);
+            tank.setMoving(true);
             badTanks.add(tank);
         }
     }

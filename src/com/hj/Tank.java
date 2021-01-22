@@ -66,17 +66,18 @@ public class Tank {
         if (!moving) {
             return;
         }
+        int padding = 2;
         if (dir == Dir.RIGHT) {
-            x = x + speed;
+            x = x + speed > TankFrame.width - Tank.WEIGHT - padding ? x : x + speed;
         }
         if (dir == Dir.LEFT) {
-            x = x - speed;
+            x = x - speed < padding ? x : (x - speed);
         }
         if (dir == Dir.UP) {
-            y = y - speed;
+            y = y - speed < padding+10 ? y : (y - speed);
         }
         if (dir == Dir.DOWN) {
-            y = y + speed;
+            y = y + speed > TankFrame.height - Tank.HEIGHT - padding ? y : y + speed;
         }
     }
 

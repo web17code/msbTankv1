@@ -22,7 +22,7 @@ public class TankFrame extends Frame {
     public final static int height = 600;
 
     public TankFrame() throws HeadlessException {
-        t1.setSpeed(15);
+        t1.setSpeed(3);
         // i will dead.
         // badTanks.add(t1);
         setSize(width, height);

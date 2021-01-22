@@ -18,11 +18,11 @@ public class TankFrame extends Frame {
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> badTanks = new ArrayList<>();
     List<Explosion> explosions = new ArrayList<>();
-    public final static int width = 800;
-    public final static int height = 600;
+    public final static int width = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
+    public final static int height = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
 
     public TankFrame() throws HeadlessException {
-        t1.setSpeed(3);
+        t1.setSpeed(7);
         // i will dead.
         // badTanks.add(t1);
         setSize(width, height);
@@ -38,7 +38,7 @@ public class TankFrame extends Frame {
         });
         addKeyListener(myKeyAdapter);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < PropertyMgr.getInt("initTankCount"); i++) {
             Tank tank = new Tank(200 + 50 * i, 200, Dir.DOWN, Group.BAD,this);
             tank.setMoving(true);
             badTanks.add(tank);

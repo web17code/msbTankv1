@@ -11,17 +11,21 @@ import static javax.imageio.ImageIO.read;
  * 2021/1/11
  */
 public class ResourceImageMgr {
-    public static BufferedImage tankUp, tankDown, tankLeft, tankRight;
+    public static BufferedImage goodTankUp, goodTankDown, goodTankLeft, goodTankRight;
+    public static BufferedImage badTankUp, badTankDown, badTankLeft, badTankRight;
     public static BufferedImage bulletUp, bulletDown, bulletLeft, bulletRight;
     public static BufferedImage[] explosions = new BufferedImage[16];
 
     static {
         try {
-            tankDown = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/tankD.gif"));
-            tankUp = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
-            tankLeft = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
-            tankRight = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
-
+            goodTankUp = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
+            goodTankLeft = ImageUtil.rotateImage(goodTankUp, -90);
+            goodTankRight= ImageUtil.rotateImage(goodTankUp, 90);
+            goodTankDown = ImageUtil.rotateImage(goodTankUp, 180);
+            badTankUp = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            badTankLeft = ImageUtil.rotateImage(badTankUp, -90);
+            badTankRight= ImageUtil.rotateImage(badTankUp, 90);
+            badTankDown = ImageUtil.rotateImage(badTankUp, 180);
             bulletUp = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
             bulletDown = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
             bulletLeft = ImageIO.read(ResourceImageMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * 2020/12/8
  */
 public class Bullet {
-    private final int speed = 10;
+    private final int speed = PropertyMgr.getInt("bulletSpeed");
     private final Group group;
     private Dir dir;
     private int x, y;

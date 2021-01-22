@@ -17,8 +17,8 @@ public class Tank {
     private TankFrame tf;
     private Group group;
     private Random random = new Random();
-    public static final int WEIGHT = ResourceImageMgr.tankUp.getWidth();
-    public static final int HEIGHT = ResourceImageMgr.tankUp.getHeight();
+    public static final int WEIGHT = ResourceImageMgr.goodTankUp.getWidth();
+    public static final int HEIGHT = ResourceImageMgr.goodTankUp.getHeight();
     private Rectangle rect;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
@@ -38,19 +38,19 @@ public class Tank {
         }
         switch (dir) {
             case DOWN:
-                img = ResourceImageMgr.tankDown;
+                img = this.group==Group.GOOD?ResourceImageMgr.goodTankDown:ResourceImageMgr.badTankDown;
                 break;
             case UP:
-                img = ResourceImageMgr.tankUp;
+                img = this.group==Group.GOOD?ResourceImageMgr.goodTankUp:ResourceImageMgr.badTankUp;
                 break;
             case LEFT:
-                img = ResourceImageMgr.tankLeft;
+                img = this.group==Group.GOOD?ResourceImageMgr.goodTankLeft:ResourceImageMgr.badTankLeft;
                 break;
             case RIGHT:
-                img = ResourceImageMgr.tankRight;
+                img = this.group==Group.GOOD?ResourceImageMgr.goodTankRight:ResourceImageMgr.badTankRight;
                 break;
             default:
-                img = ResourceImageMgr.tankUp;
+                img = ResourceImageMgr.goodTankUp;
                 break;
         }
         g.drawImage(img, x, y, null);

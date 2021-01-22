@@ -19,6 +19,7 @@ public class Tank {
     private Random random = new Random();
     public static final int WEIGHT = ResourceImageMgr.tankUp.getWidth();
     public static final int HEIGHT = ResourceImageMgr.tankUp.getHeight();
+    private Rectangle rect;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -26,6 +27,7 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+        this.rect = new Rectangle(x,y,WEIGHT,HEIGHT);
     }
 
     void paint(Graphics g) {
@@ -79,6 +81,8 @@ public class Tank {
         if (dir == Dir.DOWN) {
             y = y + speed > TankFrame.height - Tank.HEIGHT - padding ? y : y + speed;
         }
+        this.rect.x = this.x;
+        this.rect.y = this.y;
     }
 
     public Dir getDir() {
@@ -121,5 +125,9 @@ public class Tank {
 
     public void die() {
         this.live = false;
+    }
+
+    public Rectangle getRect() {
+        return this.rect;
     }
 }

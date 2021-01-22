@@ -16,7 +16,7 @@ public class Bullet {
     private boolean live = true;
     public static final int WEIGHT = ResourceImageMgr.bulletUp.getWidth();
     public static final int HEIGHT = ResourceImageMgr.bulletUp.getHeight();
-
+    private Rectangle rect;
 
     public Bullet(Dir dir, int x, int y, Group group, TankFrame tf) {
         this.dir = dir;
@@ -24,6 +24,7 @@ public class Bullet {
         this.y = y;
         this.tf = tf;
         this.group = group;
+        this.rect = new Rectangle(x,y,WEIGHT,HEIGHT);
     }
 
     public void paint(Graphics g) {
@@ -43,6 +44,8 @@ public class Bullet {
         if (dir == Dir.DOWN) {
             y = y + speed;
         }
+        this.rect.x = this.x;
+        this.rect.y = this.y;
         if (x < 0 || y < 0 || x > TankFrame.width || y > TankFrame.height) {
             this.live = false;
             tf.bullets.remove(this);
@@ -71,11 +74,9 @@ public class Bullet {
 
 
     public void collideWith(Tank tank) {
-        Rectangle bulletRect = new Rectangle(x, y, WEIGHT, HEIGHT);
-        Rectangle tankRect = new Rectangle(tank.getX(), tank.getY(), Tank.WEIGHT, Tank.HEIGHT);
         boolean dead = false;
         if (group != tank.getGroup()) {
-            dead = bulletRect.intersects(tankRect);
+            dead = this.rect.intersects(tank.getRect());
         }
         if (dead) {
             tank.die();

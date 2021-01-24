@@ -18,16 +18,16 @@ public class TankFrame extends Frame {
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> badTanks = new ArrayList<>();
     List<Explosion> explosions = new ArrayList<>();
-    public final static int width = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
-    public final static int height = Integer.parseInt((String) PropertyMgr.get("gameHeight"));
+    public final static int WIDTH = PropertyMgr.getInt("gameWidth");
+    public final static int HEIGHT = PropertyMgr.getInt("gameHeight");
 
     public TankFrame() throws HeadlessException {
         t1.setSpeed(7);
         // i will dead.
         // badTanks.add(t1);
-        setSize(width, height);
+        setSize(WIDTH, HEIGHT);
         setResizable(false);
-        setTitle("tank-v1.0");
+        setTitle(PropertyMgr.getString("title"));
         setVisible(true);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -55,12 +55,12 @@ public class TankFrame extends Frame {
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
-            offScreenImage = this.createImage(width, height);
+            offScreenImage = this.createImage(WIDTH, HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
         gOffScreen.setColor(Color.BLACK);
-        gOffScreen.fillRect(0, 0, width, height);
+        gOffScreen.fillRect(0, 0, WIDTH, HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
         g.drawImage(offScreenImage, 0, 0, null);

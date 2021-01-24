@@ -46,7 +46,7 @@ public class Bullet {
         }
         this.rect.x = this.x;
         this.rect.y = this.y;
-        if (x < 0 || y < 0 || x > TankFrame.width || y > TankFrame.height) {
+        if (x < 0 || y < 0 || x > TankFrame.WIDTH || y > TankFrame.HEIGHT) {
             this.live = false;
             tf.bullets.remove(this);
             return;

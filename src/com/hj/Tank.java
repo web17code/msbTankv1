@@ -70,7 +70,7 @@ public class Tank {
         }
         int padding = 2;
         if (dir == Dir.RIGHT) {
-            x = x + speed > TankFrame.width - Tank.WEIGHT - padding ? x : x + speed;
+            x = x + speed > TankFrame.WIDTH - Tank.WEIGHT - padding ? x : x + speed;
         }
         if (dir == Dir.LEFT) {
             x = x - speed < padding ? x : (x - speed);
@@ -79,7 +79,7 @@ public class Tank {
             y = y - speed < padding+10 ? y : (y - speed);
         }
         if (dir == Dir.DOWN) {
-            y = y + speed > TankFrame.height - Tank.HEIGHT - padding ? y : y + speed;
+            y = y + speed > TankFrame.HEIGHT - Tank.HEIGHT - padding ? y : y + speed;
         }
         this.rect.x = this.x;
         this.rect.y = this.y;
